@@ -159,3 +159,24 @@ def test_css_accessible(client):
 
     assert response.status_code == 200
     assert b".calculator" in response.data
+
+@pytest.mark.parametrize(
+    "expression, expected",
+    [
+        ("-3+5", 2.0),
+        ("5+-3", 2.0),
+        ("-8/-2", 4.0),
+    ],
+)
+def test_calculate_negative_numbers(expression, expected):
+    """
+    Vérifie le calcul des expressions contenant des opérandes négatifs.
+
+    Args:
+        expression (str): Expression contenant un nombre négatif.
+        expected (float): Résultat mathématique attendu.
+
+    Returns:
+        None: Le test réussit si le résultat correspond à expected.
+    """
+    assert calculate(expression) == pytest.approx(expected)
