@@ -143,6 +143,8 @@ Le projet utilise **pytest** pour vérifier le comportement attendu de la calcul
 
 Les tests seront regroupés dans le répertoire `tests/`.
 
+Les tests des interactions JavaScript nécessitent également **Node.js**.
+
 Ils permettront notamment de vérifier :
 
 - Les quatre opérations arithmétiques.
@@ -261,4 +263,3 @@ Log3000_Gr16/
 Les répertoires `templates/` et `static/` contiennent chacun un fichier `README.md` décrivant leur rôle, leurs principaux fichiers et leurs dépendances.
 
 Un répertoire `tests/` et son fichier `README.md` seront ajoutés lors de la partie 3 du TP.
-
