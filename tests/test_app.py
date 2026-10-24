@@ -29,6 +29,8 @@ def client():
         ("8-3", 5.0),
         ("3*4", 12.0),
         ("7/2", 3.5),
+        ("3+4+2", "7.0"),
+        ("10+5-6*3/2", "6.0"),
     ],
 )
 def test_calculate_valid(expression, expected):
@@ -91,6 +93,8 @@ def test_homepage_get(client):
         ("8-3", "5.0"),
         ("3*4", "12.0"),
         ("7/2", "3.5"),
+        ("3+4+2", "7.0"),
+        ("10+5-6*3/2", "6.0"),
     ],
 )
 def test_homepage_post_calculation(client, expression, expected):
