@@ -3,7 +3,7 @@
 Le serveur délègue les opérations élémentaires au module operators.
 Il rend le template HTML depuis templates/ et sert le CSS depuis static/.
 """
-
+import re
 from flask import Flask, request, render_template
 from operators import add, subtract, multiply, divide
 
@@ -31,37 +31,25 @@ def calculate(expr: str):
             plusieurs opérateurs ou des opérandes non numériques.
         ZeroDivisionError: Si la fonction de division reçoit un diviseur nul.
     """
-    if not expr or not isinstance(expr, str):
+    if not isinstance(expr, str) or not expr.strip():
         raise ValueError("empty expression")
 
     s = expr.replace(" ", "")
 
-    op_pos = -1
-    op_char = None
+    number = r"[+-]?(?:\d+(?:\.\d*)?|\.\d+)"
+    pattern = rf"({number})([+\-*/])({number})"
 
-    # Refuse plusieurs symboles opérateurs : le parseur n'évalue pas de chaînes d'opérations.
-    for i, ch in enumerate(s):
-        if ch in OPS:
-            if op_pos != -1:
-                raise ValueError("only one operator is allowed")
-            op_pos = i
-            op_char = ch
+    match = re.fullmatch(pattern, s)
 
-    if op_pos <= 0 or op_pos >= len(s) - 1:
-        # operator at start/end or not found
-        # Les deux opérandes doivent être présents de part et d'autre de l'opérateur.
+    if match is None:
         raise ValueError("invalid expression format")
 
-    left = s[:op_pos]
-    right = s[op_pos+1:]
+    left, operator, right = match.groups()
 
-    try:
-        a = float(left)
-        b = float(right)
-    except ValueError:
-        raise ValueError("operands must be numbers")
+    a = float(left)
+    b = float(right)
 
-    return OPS[op_char](a, b)
+    return OPS[operator](a, b)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
