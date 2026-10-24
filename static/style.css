@@ -1,3 +1,4 @@
+/* Mise en page centrée pour la calculatrice de démonstration. */
 body {
    font-family: Arial, sans-serif;
    background-color: #f0f0f0;
@@ -8,6 +9,7 @@ body {
    margin: 0;
 }
 
+/* Conteneur principal : limite la largeur de l’interface. */
 .calculator {
    width: 100%;
    max-width: 600px;
@@ -24,6 +26,7 @@ h1 {
    font-size: 36px;
 }
 
+/* Affichage de l’expression et du résultat renvoyé par Flask. */
 #display {
    width: 100%;
    height: 80px;
@@ -36,7 +39,7 @@ h1 {
    background-color: #222;
    color: #fff;
 }
-
+/* Une grille de quatre colonnes aligne les touches de la calculatrice. */
 .buttons {
    display: grid;
    grid-template-columns: repeat(4, 1fr);
@@ -58,7 +61,7 @@ h1 {
 .btn:hover {
    background-color: #555;
 }
-
+/* Différencie les opérations des touches numériques. */
 .operator {
    background-color: #ff9500;
 }
