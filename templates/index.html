@@ -4,18 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Flask Calculator</title>
+   <!-- Flask génère le chemin du CSS afin que le navigateur
+   retrouve correctement les ressources du dossier static. -->
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 <div class="calculator">
    <h1>Flask Calculator</h1>
+   <!-- Le formulaire utilise la méthode POST pour envoyer les données au serveur Flask sans les afficher dans l'URL -->
    <form method="POST">
+      <!-- Champ d'affichage en lecture seule : l'utilisateur ne peut pas taper au clavier.
+      La valeur "result" est injectée par le serveur après le calcul. -->
       <input type="text" name="display" id="display" value="{{ result }}" readonly>
 
       <div class="buttons">
+         <!-- Boutons numériques -->
          <button type="button" class="btn" onclick="appendToDisplay('1')">1</button>
          <button type="button" class="btn" onclick="appendToDisplay('2')">02</button>
          <button type="button" class="btn" onclick="appendToDisplay('3')">3</button>
+         <!-- Boutons opérateurs (classe "operator" pour le style CSS orange) -->
          <button type="button" class="btn operator" onclick="appendToDisplay('+')">+</button>
 
          <button type="button" class="btn" onclick="appendToDisplay('4')">4</button>
@@ -29,20 +36,32 @@
          <button type="button" class="btn operator" onclick="appendToDisplay('*')"></button>
 
          <button type="button" class="btn" onclick="appendToDisplay('0')">0</button>
+         <!-- Bouton pour effacer le champ (Clear) -->
          <button type="button" class="btn" onclick="clearDisplay()">C</button>
          <button type="submit" class="btn operator">=</button>
          <button type="button" class="btn operator" onclick="appendToDisplay('/')"></button>
       </div>
    </form>
 </div>
-
+<!-- Script JavaScript pour gérer l'affichage côté client sans recharger la page -->
 <script>
+
    function appendToDisplay(value) {
+      /**
+         * Rôle : Ajoute la valeur passée en paramètre à la fin du champ d'affichage.
+         * Entrée : value (string) - Le caractère ou le chiffre à ajouter.
+         * Sortie : Aucune (modifie directement le DOM).
+      */
       const display = document.getElementById('display');
       display.value += value;
    }
 
    function clearDisplay() {
+      /**
+         * Rôle : Vide complètement le champ d'affichage de la calculatrice.
+         * Entrée : Aucune.
+         * Sortie : Aucune (modifie directement le DOM).
+      */
       document.getElementById('display').value = '';
    }
 </script>
