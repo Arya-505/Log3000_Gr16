@@ -29,8 +29,10 @@ def client():
         ("8-3", 5.0),
         ("3*4", 12.0),
         ("7/2", 3.5),
-        ("3+4+2", "7.0"),
-        ("10+5-6*3/2", "6.0"),
+        ("3+4+2", 9.0),
+        ("10+5-6*3/2", 6.0),
+        ("2+3*4", 14.0),
+        ("20/5/2", 2.0),
     ],
 )
 def test_calculate_valid(expression, expected):
@@ -52,9 +54,11 @@ def test_calculate_valid(expression, expected):
         "",
         "3+",
         "+3",
-        "3+4+5",
+        "3+*4",
         "abc+2",
         "12",
+        "2 3+4",
+        "3 + * 4",
     ],
 )
 def test_calculate_invalid(expression):
@@ -93,8 +97,10 @@ def test_homepage_get(client):
         ("8-3", "5.0"),
         ("3*4", "12.0"),
         ("7/2", "3.5"),
-        ("3+4+2", "7.0"),
+        ("3+4+2", "9.0"),
         ("10+5-6*3/2", "6.0"),
+        ("2+3*4", "14.0"),
+        ("20/5/2", "2.0"),
     ],
 )
 def test_homepage_post_calculation(client, expression, expected):
@@ -170,6 +176,9 @@ def test_css_accessible(client):
         ("-3+5", 2.0),
         ("5+-3", 2.0),
         ("-8/-2", 4.0),
+        (" 3 + 4 ", 7.0),
+        ("2 + 3 * 4", 14.0),
+        ("20 / 5 / 2", 2.0),
     ],
 )
 def test_calculate_negative_numbers(expression, expected):
