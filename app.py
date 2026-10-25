@@ -19,37 +19,100 @@ OPS = {
 def calculate(expr: str):
     """
     Role:
-        Analyse une expression binaire puis délègue son calcul.
-        Le format pris en charge par cette version est (nombre opérateur nombre)
-        avec un seul opérateur parmi +, -, * et /.
+        Analyse et calcule une expression contenant plusieurs opérations.
+        La multiplication et la division sont prioritaires sur l'addition et
+        la soustraction; les opérations de même priorité sont évaluées de
+        gauche à droite.
     Args:
         expr (str): Expression envoyée par le formulaire, p. ex:(8 + 3).
     Returns:
-        float: Résultat de l'opération appliquée à deux flottants.
+    float: Résultat de l'expression.
     Raises:
-        ValueError: Si l'expression est vide, mal formée, contient
-            plusieurs opérateurs ou des opérandes non numériques.
+    ValueError: Si l'expression est vide, mal formée ou contient
+        des opérandes non numériques.
         ZeroDivisionError: Si la fonction de division reçoit un diviseur nul.
     """
     if not isinstance(expr, str) or not expr.strip():
         raise ValueError("empty expression")
 
-    s = expr.replace(" ", "")
+    token_pattern = re.compile(r"\s*(?:(\d+(?:\.\d*)?|\.\d+)|([+\-*/]))")
+    tokens = []
+    position = 0
 
-    number = r"[+-]?(?:\d+(?:\.\d*)?|\.\d+)"
-    pattern = rf"({number})([+\-*/])({number})"
+    while position < len(expr):
+        if not expr[position:].strip():
+            break
 
-    match = re.fullmatch(pattern, s)
+        match = token_pattern.match(expr, position)
+        if match is None:
+            raise ValueError("invalid expression format")
 
-    if match is None:
+        number, operator = match.groups()
+        tokens.append(float(number) if number is not None else operator)
+        position = match.end()
+
+    token_position = 0
+    binary_operator_count = 0
+
+    def parse_factor():
+        nonlocal token_position
+        sign = 1
+
+        while (
+            token_position < len(tokens)
+            and tokens[token_position] in ("+", "-")
+        ):
+            if tokens[token_position] == "-":
+                sign *= -1
+            token_position += 1
+
+        if (
+            token_position >= len(tokens)
+            or isinstance(tokens[token_position], str)
+        ):
+            raise ValueError("invalid expression format")
+
+        value = tokens[token_position]
+        token_position += 1
+        return sign * value
+
+    def parse_term():
+        nonlocal token_position, binary_operator_count
+        value = parse_factor()
+
+        while (
+            token_position < len(tokens)
+            and tokens[token_position] in ("*", "/")
+        ):
+            operator = tokens[token_position]
+            token_position += 1
+            right = parse_factor()
+            binary_operator_count += 1
+            value = OPS[operator](value, right)
+
+        return value
+
+    def parse_expression():
+        nonlocal token_position, binary_operator_count
+        value = parse_term()
+
+        while (
+            token_position < len(tokens)
+            and tokens[token_position] in ("+", "-")
+        ):
+            operator = tokens[token_position]
+            token_position += 1
+            right = parse_term()
+            binary_operator_count += 1
+            value = OPS[operator](value, right)
+
+        return value
+
+    result = parse_expression()
+    if token_position != len(tokens) or binary_operator_count == 0:
         raise ValueError("invalid expression format")
 
-    left, operator, right = match.groups()
-
-    a = float(left)
-    b = float(right)
-
-    return OPS[operator](a, b)
+    return result
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
