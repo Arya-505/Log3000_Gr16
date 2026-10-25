@@ -36,6 +36,7 @@ Avant de commencer, assurez-vous d'avoir installé les outils suivants :
 - **Python** (version 3.10 ou supérieure)
 - **pip** (gestionnaire de paquets Python)
 - **Git** (outil de gestion des versions)
+- **Node.js** :(nécessaire pour exécuter les tests automatisés des interactions JavaScript)
 
 Les bibliothèques nécessaires sont indiquées dans `requirements.txt` :
 
@@ -137,28 +138,29 @@ Dans le terminal exécutant Flask, appuyer sur :
 
 `Ctrl + C`
 
-## 5. Tests automatisés
+## 5. Tests automatisés:
 
-Le projet utilise **pytest** pour vérifier le comportement attendu de la calculatrice.
+Le projet utilise **pytest** pour vérifier le bon fonctionnement de la calculatrice.
 
-Les tests seront regroupés dans le répertoire `tests/`.
-
-Les tests des interactions JavaScript nécessitent également **Node.js**.
-
-Ils permettront notamment de vérifier :
+Les tests sont regroupés dans le répertoire `tests/` et couvrent notamment :
 
 - Les quatre opérations arithmétiques.
-- Les résultats attendus des calculs.
+- Les expressions contenant plusieurs opérations et la priorité des opérateurs.
+- Les nombres négatifs et décimaux.
 - La gestion des expressions invalides.
-- Le traitement des erreurs.
-- Le comportement de l'application Flask.
+- La division par zéro.
+- Les requêtes HTTP et le fonctionnement de Flask.
+- Les éléments de l'interface utilisateur.
+- Les interactions JavaScript.
+
+Les tests d'interaction JavaScript nécessitent l'installation de **Node.js**.
 
 ### 5.1. Exécuter les tests
 
 Depuis le répertoire principal du projet, exécuter :
 
 ```bash
-python -m pytest -v
+python -m pytest tests/ -v
 ```
 
 L'option `-v` permet d'afficher le détail des tests exécutés et leurs résultats.
@@ -169,9 +171,26 @@ L'option `-v` permet d'afficher le détail des tests exécutés et leurs résult
 - **FAILED** : le comportement obtenu ne correspond pas au résultat attendu.
 - **ERROR** : une erreur empêche l'exécution normale du test.
 
-Les tests en échec seront analysés afin d'identifier les bogues et de créer les Issues GitHub correspondantes.
+### 5.3. Résultats de la validation finale
 
-**État actuel :** les tests seront ajoutés dans la partie 3 du TP3. Cette section sera mise à jour après leur création.
+Après correction des bogues, l'ensemble de la suite de tests a été réexécuté sur la branche locale `main`.
+
+**Résultat obtenu :**
+
+```text
+======================= 58 passed in 0.45s =======================
+```
+
+| Indicateur | Résultat |
+|---|---|
+| Tests exécutés | 58 |
+| Tests réussis | 58 |
+| Tests échoués | 0 |
+| Erreurs d'exécution | 0 |
+
+Cette validation confirme que l'ensemble des tests automatisés réussit sur la version locale testée.
+
+Les tests couvrent les corrections apportées aux opérations arithmétiques, à l'analyse des expressions, aux éléments de l'interface et aux interactions JavaScript.
 
 ## 6. Flux de contribution
 
@@ -235,6 +254,26 @@ Pour proposer une modification :
 Après la fusion des corrections, l'ensemble de la suite de tests est exécuté afin de vérifier que les problèmes sont corrigés et qu'aucune régression n'a été introduite.
 
 Les Issues correspondantes sont ensuite clôturées.
+
+### 6.6. Bilan des corrections et des Pull Requests
+
+Dans le cadre du TP3, les bogues identifiés ont été documentés à l'aide de GitHub Issues.
+
+Chaque correction a été développée sur une branche dédiée, puis proposée à l'intégration dans `main` au moyen d'une Pull Request.
+
+Les principales corrections concernent :
+
+- L'ordre des opérandes dans la soustraction.
+- L'utilisation de la division réelle au lieu de la division entière.
+- Le remplacement de l'exponentiation par la multiplication.
+- La correction des libellés des boutons de la calculatrice.
+- La reconnaissance des nombres négatifs.
+- La gestion des expressions comportant plusieurs opérations.
+- La réinitialisation de l'affichage après un résultat ou une erreur.
+
+Les Pull Requests permettent de consulter les modifications, d'effectuer des revues de code et de conserver l'historique des fusions.
+
+Les Issues fermées et les Pull Requests associées sont consultables dans le dépôt GitHub.
 
 ## 7. Structure du projet
 
