@@ -286,8 +286,14 @@ Log3000_Gr16/
 ├── templates/
 │   ├── index.html
 │   └── README.md
-└── static/
-    ├── style.css
+├── static/
+│   ├── style.css
+│   └── README.md
+└── tests/
+    ├── test_app.py
+    ├── test_interaction.py
+    ├── test_interface.py
+    ├── test_operators.py
     └── README.md
 ```
 
@@ -298,7 +304,9 @@ Log3000_Gr16/
 - **`requirements.txt`** : précise les dépendances Python nécessaires à l'application et aux tests.
 - **`templates/index.html`** : définit l'interface utilisateur et les fonctions JavaScript.
 - **`static/style.css`** : définit la présentation graphique de la calculatrice.
+- **`tests/test_app.py`** : vérifie l'analyse des expressions, les calculs, les nombres négatifs, la validation des entrées et les routes Flask.
+- **`tests/test_operators.py`** : vérifie les quatre opérations arithmétiques ainsi que la gestion de la division par zéro.
+- **`tests/test_interface.py`** : vérifie les éléments HTML de l'interface, notamment les libellés des boutons et le formulaire.
+- **`tests/test_interaction.py`** : vérifie les interactions JavaScript, notamment la réinitialisation de l'affichage après un r
 
-Les répertoires `templates/` et `static/` contiennent chacun un fichier `README.md` décrivant leur rôle, leurs principaux fichiers et leurs dépendances.
-
-Un répertoire `tests/` et son fichier `README.md` seront ajoutés lors de la partie 3 du TP.
+Les répertoires `templates/`,  `static/` et `tests/` contiennent chacun un fichier `README.md` décrivant leur rôle, leurs principaux fichiers et leurs dépendances.
