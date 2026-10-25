@@ -45,6 +45,8 @@
 </div>
 <!-- Script JavaScript pour gérer l'affichage côté client sans recharger la page -->
 <script>
+   const display = document.getElementById('display');
+   let showingResult = display.value !== '';
 
    function appendToDisplay(value) {
       /**
@@ -52,7 +54,11 @@
          * Entrée : value (string) - Le caractère ou le chiffre à ajouter.
          * Sortie : Aucune (modifie directement le DOM).
       */
-      const display = document.getElementById('display');
+      // display.value = '' permet de vider la console entre un résultat ou un message d'erreur et un nouveau calcul 
+      if (showingResult) {
+         display.value = '';
+         showingResult = false;
+      }
       display.value += value;
    }
 
@@ -62,7 +68,8 @@
          * Entrée : Aucune.
          * Sortie : Aucune (modifie directement le DOM).
       */
-      document.getElementById('display').value = '';
+      display.value = '';
+      showingResult = false;
    }
 </script>
 </body>
