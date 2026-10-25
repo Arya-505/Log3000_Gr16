@@ -41,7 +41,8 @@ def multiply(a,b):
     Returns:
         int | float: Produit attendu a * b.
     """
-    return a ** b
+    # Correction de 'a ** b' qui calcule l'exposant contre 'a * b' qui calcule la multiplication
+    return a * b 
 
 def divide(a,b):
     """
