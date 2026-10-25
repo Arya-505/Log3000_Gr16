@@ -307,6 +307,6 @@ Log3000_Gr16/
 - **`tests/test_app.py`** : vérifie l'analyse des expressions, les calculs, les nombres négatifs, la validation des entrées et les routes Flask.
 - **`tests/test_operators.py`** : vérifie les quatre opérations arithmétiques ainsi que la gestion de la division par zéro.
 - **`tests/test_interface.py`** : vérifie les éléments HTML de l'interface, notamment les libellés des boutons et le formulaire.
-- **`tests/test_interaction.py`** : vérifie les interactions JavaScript, notamment la réinitialisation de l'affichage après un r
+- **`tests/test_interaction.py`** : vérifie les interactions JavaScript, notamment la réinitialisation de l'affichage après un résultat ou un message d'erreur.
 
 Les répertoires `templates/`,  `static/` et `tests/` contiennent chacun un fichier `README.md` décrivant leur rôle, leurs principaux fichiers et leurs dépendances.
